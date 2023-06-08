@@ -18,11 +18,11 @@ jobs:
       name: ${{ github.event.inputs.env }}
     steps:
       - if: ${{ vars.VARS_TEST == 'sandbox' }}
-        name: Type sandbox : ${{ vars.VARS_TEST }}
+        name: Type sandbox - ${{ vars.VARS_TEST }}
         run: echo ${{ vars.VARS_TEST }}
       - if: ${{ vars.VARS_TEST == 'dev' }}
-        name: Type dev : ${{ vars.VARS_TEST }}
+        name: Type dev - ${{ vars.VARS_TEST }}
         run: echo ${{ vars.VARS_TEST }}
       - if: ${{ vars.VARS_TEST == 'stg' }}
-        name: Type stg : ${{ vars.VARS_TEST }}
+        name: Type stg - ${{ vars.VARS_TEST }}
         run: echo ${{ vars.VARS_TEST }}
