@@ -1,0 +1,13 @@
+{
+  "name": "debug-cache",
+  "version": "1.0.0",
+  "description": "debug-cache",
+  "devDependencies": {
+    "chalk": "4.1.2"
+  },
+  "scripts": {
+    "test": "echo test"
+  },
+  "author": "fork-kato",
+  "license": "ISC"
+}
