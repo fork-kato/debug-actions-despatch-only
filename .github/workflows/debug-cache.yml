@@ -5,6 +5,9 @@ name: Debug Cache
 jobs:
   debug_cache:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: workdir/debug-cache
     steps:
       - uses: actions/checkout@v3
 
@@ -31,10 +34,8 @@ jobs:
         run: |
           ls -la
           echo 1
-        working-directory: workdir/debug-cache
 
       - if: ${{ steps.node_modules_cache_id.outputs.cache-hit != 'true' }}
         run: |
           npm ci
           echo 0
-        working-directory: workdir/debug-cache
