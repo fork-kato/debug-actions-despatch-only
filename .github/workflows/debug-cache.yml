@@ -8,32 +8,33 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Debug 1
-        run: |
-          node -v
-          npm -v
-          ls -la
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-
-      - name: Debug 2
-        run: |
-          node -v
-          npm -v
-          ls -la
-        working-directory: workdir
-
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
+          cache: 'npm'
+          cache-dependency-path: workdir/debug-cache/package-lock.json
 
-      - name: Debug 3
+      - name: Node Modules Cache
+        uses: actions/cache@v3
+        id: node_modules_cache_id
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: workdir/debug-cache/node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('workdir/debug-cache/package-lock.json') }}
+
+      - name: Debug
+        run: echo '${{ toJSON(steps.node_modules_cache_id.outputs) }}'
+
+      - if: ${{ steps.node_modules_cache_id.outputs.cache-hit == 'true' }}
         run: |
-          node -v
-          npm -v
           ls -la
-        working-directory: workdir
+          echo 1
+        working-directory: workdir/debug-cache
+
+      - if: ${{ steps.node_modules_cache_id.outputs.cache-hit != 'true' }}
+        run: |
+          npm ci
+          echo 0
+        working-directory: workdir/debug-cache
